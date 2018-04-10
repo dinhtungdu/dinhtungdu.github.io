@@ -39,37 +39,37 @@ add_filter( 'woocommerce_get_image_size_gallery_thumbnail', function () {
 
 First all know the image size of WooCommerce is `shop_thumbnail`. Then I look up at register image size function inside the plugin. I found a function name `add_image_sizes()` in class `woocommerce/includes/class-woocommerce.php` which is:
 
-```php
-	public function add_image_sizes() {
-		$thumbnail         = wc_get_image_size( 'thumbnail' );
-		$single            = wc_get_image_size( 'single' );
-		$gallery_thumbnail = wc_get_image_size( 'gallery_thumbnail' );
+```
+public function add_image_sizes() {
+	$thumbnail         = wc_get_image_size( 'thumbnail' );
+	$single            = wc_get_image_size( 'single' );
+	$gallery_thumbnail = wc_get_image_size( 'gallery_thumbnail' );
 
-		add_image_size( 'woocommerce_thumbnail', $thumbnail['width'], $thumbnail['height'], $thumbnail['crop'] );
-		add_image_size( 'woocommerce_single', $single['width'], $single['height'], $single['crop'] );
-		add_image_size( 'woocommerce_gallery_thumbnail', $gallery_thumbnail['width'], $gallery_thumbnail['height'], $gallery_thumbnail['crop'] );
+	add_image_size( 'woocommerce_thumbnail', $thumbnail['width'], $thumbnail['height'], $thumbnail['crop'] );
+	add_image_size( 'woocommerce_single', $single['width'], $single['height'], $single['crop'] );
+	add_image_size( 'woocommerce_gallery_thumbnail', $gallery_thumbnail['width'], $gallery_thumbnail['height'], $gallery_thumbnail['crop'] );
 
-		// Registered for bw compat. @todo remove in 4.0.
-		add_image_size( 'shop_catalog', $thumbnail['width'], $thumbnail['height'], $thumbnail['crop'] );
-		add_image_size( 'shop_single', $single['width'], $single['height'], $single['crop'] );
-		add_image_size( 'shop_thumbnail', $gallery_thumbnail['width'], $gallery_thumbnail['height'], $gallery_thumbnail['crop'] );
-	}
+	// Registered for bw compat. @todo remove in 4.0.
+	add_image_size( 'shop_catalog', $thumbnail['width'], $thumbnail['height'], $thumbnail['crop'] );
+	add_image_size( 'shop_single', $single['width'], $single['height'], $single['crop'] );
+	add_image_size( 'shop_thumbnail', $gallery_thumbnail['width'], $gallery_thumbnail['height'], $gallery_thumbnail['crop'] );
+}
 ```
 _From this function we know that the team change name of images size come with WooCommerce. The old sizes are still added but will be removed in 4.0. So it's good to change image size related code in your theme or plugin._
 
 Take a look at last line, we can see the `shop_thumbnail` use `$gallery_thumbnail` dimension from `wc_get_image_size()`. Go to the definition of that function, we have: (I stripped some parts)
 ```php
 function wc_get_image_size( $image_size ) {
-	...
-		} elseif ( 'gallery_thumbnail' === $image_size ) {
-			$size['width']  = absint( wc_get_theme_support( 'gallery_thumbnail_image_width', 100 ) );
-			$size['height'] = $size['width'];
-			$size['crop']   = 1;
+...
+	} elseif ( 'gallery_thumbnail' === $image_size ) {
+		$size['width']  = absint( wc_get_theme_support( 'gallery_thumbnail_image_width', 100 ) );
+		$size['height'] = $size['width'];
+		$size['crop']   = 1;
 
-		} 
-	...
-	
-	return apply_filters( 'woocommerce_get_image_size_' . $image_size, $size );
+	} 
+...
+
+return apply_filters( 'woocommerce_get_image_size_' . $image_size, $size );
 }
 ```
 That is how gallery thumbnail size is setup. We don't have any customizer option to change it but we have a filter in return statement. From here we got the solution for our problem as describe in the begining of this blog, using a filter to change the size.
