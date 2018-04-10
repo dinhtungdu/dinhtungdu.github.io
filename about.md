@@ -17,4 +17,5 @@ Currently I'm mainly a WordPress developer, I develop solution for SMB and blogg
 ### Contact me
 
 [dinhtungdu@gmail.com](mailto:dinhtungdu@gmail.com)
+
 [https://twitter.com/dinhtungdu](https://twitter.com/dinhtungdu)
