@@ -3,7 +3,7 @@ layout: post
 title: Change shop_thumbnail size in WooCommerce 3.3.3 and later versions
 ---
 
-({{ site.baseurl }}/images/woocommerce-tutorial.jpg)
+![WooCommerce]({{ site.baseurl }}/images/woocommerce-tutorial.jpg)
 
 After updated WooCommerce, you can't find anywhere to change shop_thumbnail size? You're not alone! We all got that problem because The option had been hiden.
 
@@ -36,7 +36,9 @@ add_filter( 'woocommerce_get_image_size_gallery_thumbnail', function () {
 
 ## Finding the answer
 > In this section I will describe the process when I find the answer to this problem.
+
 First all know the image size of WooCommerce is `shop_thumbnail`. Then I look up at register image size function inside the plugin. I found a function name `add_image_sizes()` in class `woocommerce/includes/class-woocommerce.php` which is:
+
 ```php
 	public function add_image_sizes() {
 		$thumbnail         = wc_get_image_size( 'thumbnail' );
