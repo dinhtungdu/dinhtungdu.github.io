@@ -12,10 +12,10 @@ Update: I currently learning Elixir 💪
 
 ### What I do
 
-Currently I'm mainly a WordPress developer, I develop solution for SMB and blogger who don't have technical skill and can't manage WordPress blog by themselves. Our themes focus on speed, reliable, microdata and SEO. In addition, I'm General Translation Editor of WordPress tiếng Việt, I contribute translations and help others translate WordPress into Vietnamese.
+I'm mainly a WordPress developer, I develop solution for SMB and blogger who don't have technical skill and can't manage WordPress blog by themselves. Our themes focus on speed, reliable, microdata and SEO. In addition, I'm General Translation Editor of WordPress tiếng Việt, I contribute translations and help others translate WordPress into Vietnamese.
 
 ### Contact me
 
 [dinhtungdu@gmail.com](mailto:dinhtungdu@gmail.com)
 
-[https://twitter.com/dinhtungdu](https://twitter.com/dinhtungdu)
+[🐧/dinhtungdu](https://twitter.com/dinhtungdu)
