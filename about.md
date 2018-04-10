@@ -16,6 +16,6 @@ I'm mainly a WordPress developer, I develop solution for SMB and blogger who don
 
 ### Contact me
 
-[dinhtungdu@gmail.com](mailto:dinhtungdu@gmail.com)
+[✉️/dinhtungdu@gmail.com](mailto:dinhtungdu@gmail.com)
 
 [🐧/dinhtungdu](https://twitter.com/dinhtungdu)
