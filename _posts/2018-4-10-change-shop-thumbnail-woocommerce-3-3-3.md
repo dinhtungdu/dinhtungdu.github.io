@@ -9,7 +9,7 @@ After updated WooCommerce, you can't find anywhere to change shop_thumbnail size
 
 We can solve this problem by using following snippet. Paste it in your theme's `functions.php` file and change the size you need:
 
-```php
+```
 add_filter( 'woocommerce_get_image_size_gallery_thumbnail', 'your_theme_change_shop_thumbnail' );
 function your_theme_change_shop_thumbnail( $size ) {
 
