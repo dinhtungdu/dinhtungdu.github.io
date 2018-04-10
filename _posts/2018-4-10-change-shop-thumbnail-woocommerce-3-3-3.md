@@ -5,7 +5,7 @@ title: Change shop_thumbnail size in WooCommerce 3.3.3 and later versions
 
 ![WooCommerce]({{ site.baseurl }}/images/woocommerce-tutorial.jpg)
 
-After updated WooCommerce, you can't find anywhere to change shop_thumbnail size? You're not alone! We all got that problem because The option had been hiden.
+After updated WooCommerce, you can't find anywhere to change shop_thumbnail size? You're not alone! We all got that problem because The option had been hidden.
 
 We can solve this problem by using following snippet. Paste it in your theme's `functions.php` file and change the size you need:
 
