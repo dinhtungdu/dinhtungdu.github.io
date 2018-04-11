@@ -35,7 +35,7 @@ add_filter( 'woocommerce_get_image_size_gallery_thumbnail', function () {
 ```
 
 ## Finding the answer
-> In this section I will describe the process when I find the answer to this problem.
+> In this section I will describe the process I use to find the answer to this problem.
 
 First all know the image size of WooCommerce is `shop_thumbnail`. Then I look up at register image size function inside the plugin. I found a function name `add_image_sizes()` in class `woocommerce/includes/class-woocommerce.php` which is:
 
