@@ -5,7 +5,7 @@ title: My journey at Automattic
 
 Today is a sad day for me. I received an email from the Happiness Hiring team said I didn't pass the second interview. The reason why I failed is my English fluency; it doesn't meet their requirement. I want to improve my fluency to re-apply, so I start blogging again.
 
-There are many blogs out there about applying to Automattic, so I'm not going to talk about the process again. Here are some notes from my first (failed) attempt, hope that help:
+There are many blogs out there about applying to Automattic, so I'm not going to talk about the process again. Here are some notes from my first (failed) attempt, hope this helps:
 
 * **Writing is the most important skill**: As you may know, the hiring process at Automattic is 100% text-based. It includes emails, text-based interview. Mistakes in your writing can make you failed (like me).
 
