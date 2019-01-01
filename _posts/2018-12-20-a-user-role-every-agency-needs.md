@@ -3,8 +3,6 @@ layout: post
 title: A user role every agency needs
 ---
 
-The snippet:
-
 ```php
 // Add new Manager role for customer.
 add_role( 'manager', __( 'Manager', 'text-domain' ),
