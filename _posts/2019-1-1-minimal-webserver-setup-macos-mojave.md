@@ -14,7 +14,6 @@ sudo vi /etc/apache2/httpd.conf
 ```
 Uncomment the following lines:
 ```
-LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 LoadModule php7_module libexec/apache2/libphp7.so
 ```
 Find `<Directory />` and change the content insides that block:
@@ -25,6 +24,11 @@ Find `<Directory />` and change the content insides that block:
  Order deny, allow
  Allow from all
 </Directory>
+```
+Find `/Library/WebServer/Documents` and replace both line with your document root directory:
+```
+DocumentRoot "/Users/yourusername/workspace"
+<Directory "/Users/yourusername/workspace">
 ```
 Next, find `<IfModule unixd_module>`, comment out the default and replace it with our info:
 ```
