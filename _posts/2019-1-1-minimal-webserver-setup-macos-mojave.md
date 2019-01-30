@@ -21,7 +21,7 @@ Find `<Directory />` and change the content insides that block:
 <Directory />
  Options Indexes FollowSymLinks Includes ExecCGI
  AllowOverride All
- Order deny, allow
+ Order deny,allow
  Allow from all
 </Directory>
 ```
