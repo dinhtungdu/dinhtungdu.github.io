@@ -3,7 +3,9 @@ layout: post
 title: WordPress Comment Type
 ---
 
-The comment system of WordPress is underused. Look at the `get_comments` function; you will notice an argument named `comment_type`. By default, WordPress has three comment types: comment, pingback, and trackback. We don't have any official way to add `comment_type`.
+The comment system of WordPress is underused.
+
+Look at the `get_comments` function; you will notice an argument named `comment_type`. By default, WordPress has three comment types: comment, pingback, and trackback. We don't have any official way to add `comment_type`.
 
 There are many possibilities for comment_type to be useful:
 - More than one comment form per post.
