@@ -62,6 +62,6 @@ Change `$api_get_template_content_url` to our endpoint and now we have fully wor
 
 > You can grab the full source code of this plugin here: [dinhtungdu/custom-elementor-source](https://github.com/dinhtungdu/custom-elementor-source)
 
-** Testing our new source
+## Testing our new source
 
 *To be continued..*
