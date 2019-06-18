@@ -66,19 +66,19 @@ Nothing happened? No, it may look identically but things happened. The source is
 Now examine the `Source_Custom::get_items`:
 
 ```
-	public function get_items( $args = [] ) {
-		$library_data = Api::get_library_data();
+public function get_items( $args = [] ) {
+	$library_data = Api::get_library_data();
 
-		$templates = [];
+	$templates = [];
 
-		if ( ! empty( $library_data['templates'] ) ) {
-			foreach ( $library_data['templates'] as $template_data ) {
-				$templates[] = $this->prepare_template( $template_data );
-			}
+	if ( ! empty( $library_data['templates'] ) ) {
+		foreach ( $library_data['templates'] as $template_data ) {
+			$templates[] = $this->prepare_template( $template_data );
 		}
-
-		return $templates;
 	}
+
+	return $templates;
+}
 ```
 
 This method fetches templates information from Elementor server then save it to the database (`wp_options` table). The method uses `Elementor\Api::get_library_data` to get library information. To make source get templates information from our endpoint, we need to implement our own `get_library_data` method.
@@ -86,111 +86,111 @@ This method fetches templates information from Elementor server then save it to 
 Rename `Api::get_library_data` to `self::get_library_data` then add these new properties and methods to our `Source_Custom`:
 
 ```
-	/**
-	 * New library option key.
-	 */
-	const LIBRARY_OPTION_KEY = 'custom_remote_info_library';
+/**
+ * New library option key.
+ */
+const LIBRARY_OPTION_KEY = 'custom_remote_info_library';
 
-	/**
-	 * Timestamp cache key to trigger library sync.
-	 */
-	const TIMESTAMP_CACHE_KEY = 'custom_remote_update_timestamp';
+/**
+ * Timestamp cache key to trigger library sync.
+ */
+const TIMESTAMP_CACHE_KEY = 'custom_remote_update_timestamp';
 
-	/**
-	 * API info URL.
-	 *
-	 * Holds the URL of the info API.
-	 *
-	 * @access public
-	 * @static
-	 *
-	 * @var string API info URL.
-	 */
-	public static $api_info_url = 'YOUR_API_INFO_URL_HERE';
+/**
+ * API info URL.
+ *
+ * Holds the URL of the info API.
+ *
+ * @access public
+ * @static
+ *
+ * @var string API info URL.
+ */
+public static $api_info_url = 'YOUR_API_INFO_URL_HERE';
 ```
 
 , and these medthods:
 
 ```
-	/**
-	 * Get templates data.
-	 *
-	 * Retrieve the templates data from a remote server.
-	 *
-	 * @access public
-	 * @static
-	 *
-	 * @param bool $force_update Optional. Whether to force the data update or
-	 *                                     not. Default is false.
-	 *
-	 * @return array The templates data.
-	 */
-	public static function get_library_data( $force_update = false ) {
-		self::get_info_data( $force_update );
+/**
+ * Get templates data.
+ *
+ * Retrieve the templates data from a remote server.
+ *
+ * @access public
+ * @static
+ *
+ * @param bool $force_update Optional. Whether to force the data update or
+ *                                     not. Default is false.
+ *
+ * @return array The templates data.
+ */
+public static function get_library_data( $force_update = false ) {
+	self::get_info_data( $force_update );
 
-		$library_data = get_option( self::LIBRARY_OPTION_KEY );
+	$library_data = get_option( self::LIBRARY_OPTION_KEY );
 
-		if ( empty( $library_data ) ) {
-			return [];
-		}
-
-		return $library_data;
+	if ( empty( $library_data ) ) {
+		return [];
 	}
 
-	/**
-	 * Get info data.
-	 *
-	 * This function notifies the user of upgrade notices, new templates and contributors.
-	 *
-	 * @access private
-	 * @static
-	 *
-	 * @param bool $force_update Optional. Whether to force the data retrieval or
-	 *                                     not. Default is false.
-	 *
-	 * @return array|false Info data, or false.
-	 */
-	private static function get_info_data( $force_update = false ) {
+	return $library_data;
+}
 
-		$elementor_update_timestamp = get_option( '_transient_timeout_elementor_remote_info_api_data_' . ELEMENTOR_VERSION );
-		$update_timestamp = get_transient( self::TIMESTAMP_CACHE_KEY );
+/**
+ * Get info data.
+ *
+ * This function notifies the user of upgrade notices, new templates and contributors.
+ *
+ * @access private
+ * @static
+ *
+ * @param bool $force_update Optional. Whether to force the data retrieval or
+ *                                     not. Default is false.
+ *
+ * @return array|false Info data, or false.
+ */
+private static function get_info_data( $force_update = false ) {
 
-		if ( $force_update || ! $update_timestamp || $update_timestamp != $elementor_update_timestamp ) {
-			$timeout = ( $force_update ) ? 25 : 8;
+	$elementor_update_timestamp = get_option( '_transient_timeout_elementor_remote_info_api_data_' . ELEMENTOR_VERSION );
+	$update_timestamp = get_transient( self::TIMESTAMP_CACHE_KEY );
 
-			$response = wp_remote_get( self::$api_info_url, [
-				'timeout' => $timeout,
-				'body' => [
-					// Which API version is used.
-					'api_version' => ELEMENTOR_VERSION,
-					// Which language to return.
-					'site_lang' => get_bloginfo( 'language' ),
-				],
-			] );
+	if ( $force_update || ! $update_timestamp || $update_timestamp != $elementor_update_timestamp ) {
+		$timeout = ( $force_update ) ? 25 : 8;
 
-			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
-				set_transient( self::TIMESTAMP_CACHE_KEY, [], 2 * HOUR_IN_SECONDS );
+		$response = wp_remote_get( self::$api_info_url, [
+			'timeout' => $timeout,
+			'body' => [
+				// Which API version is used.
+				'api_version' => ELEMENTOR_VERSION,
+				// Which language to return.
+				'site_lang' => get_bloginfo( 'language' ),
+			],
+		] );
 
-				return false;
-			}
+		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+			set_transient( self::TIMESTAMP_CACHE_KEY, [], 2 * HOUR_IN_SECONDS );
 
-			$info_data = json_decode( wp_remote_retrieve_body( $response ), true );
-
-			if ( empty( $info_data ) || ! is_array( $info_data ) ) {
-				set_transient( self::TIMESTAMP_CACHE_KEY, [], 2 * HOUR_IN_SECONDS );
-
-				return false;
-			}
-
-			if ( isset( $info_data['library'] ) ) {
-				update_option( self::LIBRARY_OPTION_KEY, $info_data['library'], 'no' );
-			}
-
-			set_transient( self::TIMESTAMP_CACHE_KEY, $elementor_update_timestamp, 12 * HOUR_IN_SECONDS );
+			return false;
 		}
 
-		return $info_data;
+		$info_data = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( empty( $info_data ) || ! is_array( $info_data ) ) {
+			set_transient( self::TIMESTAMP_CACHE_KEY, [], 2 * HOUR_IN_SECONDS );
+
+			return false;
+		}
+
+		if ( isset( $info_data['library'] ) ) {
+			update_option( self::LIBRARY_OPTION_KEY, $info_data['library'], 'no' );
+		}
+
+		set_transient( self::TIMESTAMP_CACHE_KEY, $elementor_update_timestamp, 12 * HOUR_IN_SECONDS );
 	}
+
+	return $info_data;
+}
 ```
 
 From now, we can change the `$api_info_url` to our info url which returns the library data and get them displayed in the Elementor Template Library. (more on this later).
@@ -198,78 +198,78 @@ From now, we can change the `$api_info_url` to our info url which returns the li
 We have a remaining call to Elementor Api in `Source_Custom::get_data`. We do the same process as above, change `Api::get_template_content` to `self::get_template_content` and add the following code to `Source_Custom` class.
 
 ```
-	/**
-	 * API get template content URL.
-	 *
-	 * Holds the URL of the template content API.
-	 *
-	 * @access private
-	 * @static
-	 *
-	 * @var string API get template content URL.
-	 */
-	private static $api_get_template_content_url = 'YOUR_TEMPLATE_CONTENT_URL_HERE/%d';
+/**
+ * API get template content URL.
+ *
+ * Holds the URL of the template content API.
+ *
+ * @access private
+ * @static
+ *
+ * @var string API get template content URL.
+ */
+private static $api_get_template_content_url = 'YOUR_TEMPLATE_CONTENT_URL_HERE/%d';
 ```
 
 ```
+/**
+ * Get template content.
+ *
+ * Retrieve the templates content received from a remote server.
+ *
+ * @access public
+ * @static
+ *
+ * @param int $template_id The template ID.
+ *
+ * @return array The template content.
+ */
+public static function get_template_content( $template_id ) {
+	$url = sprintf( self::$api_get_template_content_url, $template_id );
+
+	$body_args = [
+		// Which API version is used.
+		'api_version' => ELEMENTOR_VERSION,
+		// Which language to return.
+		'site_lang' => get_bloginfo( 'language' ),
+	];
+
 	/**
-	 * Get template content.
+	 * API: Template body args.
 	 *
-	 * Retrieve the templates content received from a remote server.
+	 * Filters the body arguments send with the GET request when fetching the content.
 	 *
-	 * @access public
-	 * @static
-	 *
-	 * @param int $template_id The template ID.
-	 *
-	 * @return array The template content.
+	 * @param array $body_args Body arguments.
 	 */
-	public static function get_template_content( $template_id ) {
-		$url = sprintf( self::$api_get_template_content_url, $template_id );
+	$body_args = apply_filters( 'elementor/api/get_templates/body_args', $body_args );
 
-		$body_args = [
-			// Which API version is used.
-			'api_version' => ELEMENTOR_VERSION,
-			// Which language to return.
-			'site_lang' => get_bloginfo( 'language' ),
-		];
+	$response = wp_remote_get( $url, [
+		'timeout' => 40,
+		'body' => $body_args,
+	] );
 
-		/**
-		 * API: Template body args.
-		 *
-		 * Filters the body arguments send with the GET request when fetching the content.
-		 *
-		 * @param array $body_args Body arguments.
-		 */
-		$body_args = apply_filters( 'elementor/api/get_templates/body_args', $body_args );
-
-		$response = wp_remote_get( $url, [
-			'timeout' => 40,
-			'body' => $body_args,
-		] );
-
-		if ( is_wp_error( $response ) ) {
-			return $response;
-		}
-
-		$response_code = (int) wp_remote_retrieve_response_code( $response );
-
-		if ( 200 !== $response_code ) {
-			return new \WP_Error( 'response_code_error', sprintf( 'The request returned with a status code of %s.', $response_code ) );
-		}
-
-		$template_content = json_decode( wp_remote_retrieve_body( $response ), true );
-
-		if ( isset( $template_content['error'] ) ) {
-			return new \WP_Error( 'response_error', $template_content['error'] );
-		}
-
-		if ( empty( $template_content['data'] ) && empty( $template_content['content'] ) ) {
-			return new \WP_Error( 'template_data_error', 'An invalid data was returned.' );
-		}
-
-		return $template_content;
+	if ( is_wp_error( $response ) ) {
+		return $response;
 	}
+
+	$response_code = (int) wp_remote_retrieve_response_code( $response );
+
+	if ( 200 !== $response_code ) {
+		return new \WP_Error( 'response_code_error', sprintf( 'The request returned with a status code of %s.', $response_code ) );
+	}
+
+	$template_content = json_decode( wp_remote_retrieve_body( $response ), true );
+
+	if ( isset( $template_content['error'] ) ) {
+		return new \WP_Error( 'response_error', $template_content['error'] );
+	}
+
+	if ( empty( $template_content['data'] ) && empty( $template_content['content'] ) ) {
+		return new \WP_Error( 'template_data_error', 'An invalid data was returned.' );
+	}
+
+	return $template_content;
+}
 ```
 
 Change `$api_get_template_content_url` to our endpoint and now we have fully working template source. :)
