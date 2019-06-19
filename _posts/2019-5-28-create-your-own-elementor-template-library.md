@@ -111,7 +111,7 @@ public static $api_info_url = 'YOUR_API_INFO_URL_HERE';
 
 , and these medthods:
 
-```
+```php
 /**
  * Get templates data.
  *
