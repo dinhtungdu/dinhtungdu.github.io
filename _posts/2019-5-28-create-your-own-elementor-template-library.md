@@ -30,7 +30,7 @@ $ wp scaffold plugin custom-elementor-source
 The first step we want to do is unregister the default remote source. Why? Because the Elementor Blocks and Pages are designed to work with the `remote` source only, so we must replace the Elementor `remote` source with our own. The title of this post now can change to "Override Elementor remote template".
 
 Put the code bellow to the main plugin file we created above.
-```
+```php
 /**
  * Register our custom source.
  */
