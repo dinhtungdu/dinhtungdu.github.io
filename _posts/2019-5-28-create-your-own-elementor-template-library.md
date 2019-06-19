@@ -44,7 +44,7 @@ add_action( 'elementor/init', function() {
 ### Create our Source_Custom
 
 Now let's create a new file `includes/source.php` in our plugin folder and get our hand dirty.
-```
+```php
 <?php
 namespace Elementor\TemplateLibrary;
 
@@ -65,7 +65,7 @@ Nothing happened? No, it may look identically but things happened. The source is
 
 Now examine the `Source_Custom::get_items`:
 
-```
+```php
 public function get_items( $args = [] ) {
 	$library_data = Api::get_library_data();
 
@@ -85,7 +85,7 @@ This method fetches templates information from Elementor server then save it to 
 
 Rename `Api::get_library_data` to `self::get_library_data` then add these new properties and methods to our `Source_Custom`:
 
-```
+```php
 /**
  * New library option key.
  */
@@ -197,7 +197,7 @@ From now, we can change the `$api_info_url` to our info url which returns the li
 
 We have a remaining call to Elementor Api in `Source_Custom::get_data`. We do the same process as above, change `Api::get_template_content` to `self::get_template_content` and add the following code to `Source_Custom` class.
 
-```
+```php
 /**
  * API get template content URL.
  *
@@ -211,7 +211,7 @@ We have a remaining call to Elementor Api in `Source_Custom::get_data`. We do th
 private static $api_get_template_content_url = 'YOUR_TEMPLATE_CONTENT_URL_HERE/%d';
 ```
 
-```
+```php
 /**
  * Get template content.
  *
