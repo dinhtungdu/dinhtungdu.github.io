@@ -280,9 +280,9 @@ Change `$api_get_template_content_url` to our endpoint and now we have fully wor
 
 To test your new source, we need a working API that returns library information and template detail.
 
-The Elementor API returns data in JSON format; then we need to do the same: returning the JSON. But we don't need to be complicated here, so I created a dummy API using ... Github. Yes, Github, and it's [here](https://github.com/dinhtungdu/custom-elementor-library-dummy-api). Just storing some JSON files on Github, linking to them in our source, and we've done.
+The Elementor API returns data in JSON format; then we need to do the same: returning the JSON which has the same structure as Elementor. But we don't need to be complicated here. I created a dummy API using ... Github. Yes, Github, and it's [here](https://github.com/dinhtungdu/custom-elementor-library-dummy-api). Just storing some JSON files on Github, linking to them in our source, and we've done.
 
-> I use this method for our testing purpose only. You shouldn't use this method in production.
+> I use this method for our testing purpose only. I don't recommend using this method in production.
 
 Now we have a working API. Let's edit `includes/source.php` to make it work with that API.
 
@@ -319,7 +319,7 @@ After syncing the library, you should see the Template Library has only one temp
 
 ## Conclusion
 
-Now, nothing stops you from bringing the native experience for your customers when dealing with predefined template. The customers can browse your templates and easily insert them. No more manual importing, no more headache!
+Now, nothing stops you from bringing a better user experience for your solution/product. The customers can browse your templates and easily insert them. No more manual importing, no more headache!
 
 To override the Elementor template library, we need two components: a working API server and a remote source. By following this blog, you should be able to create your remote source.
 
