@@ -280,7 +280,9 @@ Change `$api_get_template_content_url` to our endpoint and now we have fully wor
 
 To test your new source, we need a working API that returns library information and template detail.
 
-The Elementor API returns data in JSON format; then we need to do the same: returning the JSON which has the same structure as Elementor. But we don't need to be complicated here. I created a dummy API using ... Github. Yes, Github, and it's [here](https://github.com/dinhtungdu/custom-elementor-library-dummy-api). Just storing some JSON files on Github, linking to them in our source, and we've done.
+The Elementor API returns data in JSON format; then we need to do the same: returning the JSON which has the same structure as Elementor. But we don't need to be complicated here.
+
+I created a dummy API using ... Github. Yes, Github, and it's [here](https://github.com/dinhtungdu/custom-elementor-library-dummy-api). Just storing some JSON files on Github, linking to them in our source, and we've done.
 
 > I use this method for our testing purpose only. I don't recommend using this method in production.
 
