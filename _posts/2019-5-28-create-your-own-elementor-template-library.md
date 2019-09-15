@@ -5,9 +5,9 @@ title: Create your own Elementor template library
 
 Elementor has a great feature called Template Library which let user import predefined template by a single click. But it doesn't let us - the developers - include our templates into that library (by default).
 
-> Since Elementor 2.7, `unregister_source` has been deprecated, so does this article. It means that we can't override the remote library with the method here anymore.
-
 But now we can : ).
+
+> Update: Since Elementor 2.7, `unregister_source` has been deprecated, so does this article. It means that we can't override the remote library with the method here anymore. Please find my suggesstions in the comment area.
 
 Thanks to [@davelavoie](https://github.com/davelavoie) for sharing his idea and allowing me to use it.
 
