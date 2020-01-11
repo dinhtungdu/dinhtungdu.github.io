@@ -9,6 +9,8 @@ But now we can : ).
 
 Thanks to [@davelavoie](https://github.com/davelavoie) for sharing his idea and allowing me to use it.
 
+> Updates: This solution now works with Elementor 2.7+ by using closure binding. Thank steve! see [comment](https://dinhtungdu.github.io/create-your-own-elementor-template-library/#comment-4749681400)
+
 ## How does it work?
 
 Elementor Template library is made from `Source`s. Elementor creates sources then registers them to use in the library.
@@ -35,9 +37,14 @@ Put the code bellow to the main plugin file we created above.
  * Register our custom source.
  */
 add_action( 'elementor/init', function() {
-    include 'includes/source.php';
-    \Elementor\Plugin::instance()->templates_manager->unregister_source( 'remote' );
-    \Elementor\Plugin::instance()->templates_manager->register_source( 'Elementor\TemplateLibrary\Source_Custom' );
+	include 'includes/source.php';
+	
+	// Unregister source with closure binding, thank Steve.
+	$unregister_source = function($id) {
+		unset( $this->_registered_sources[ $id ] );
+	};
+	$unregister_source->call( \Elementor\Plugin::instance()->templates_manager, 'remote');
+	\Elementor\Plugin::instance()->templates_manager->register_source( 'Elementor\TemplateLibrary\Source_Custom' );
 }, 15 );
 ```
 
