@@ -2,10 +2,10 @@
 layout: post
 title: Minimal webserver setup for macOS Mojave
 ---
-Minimal web server setup for macOS Mojave
-I reinstalled my Mac on the first day of 2019. After years of development, my Mac was slow as hell because I installed too many tools and packages. I'm trying to avoid it with this reinstall, first is the web server.
 
-There are many great choices available on the internet, including Valet, MAMP, XAMPP... I used Valet and like it in general. But I notice macOS Mojave comes with Apache and PHP 7.1 built in. Woohoo! A little config and installing MySQL are what I need to do to install my web server.
+I reinstalled my Mac on the first day of 2019. After years of development, my Mac was slow as hell because I installed too many tools and packages. I'm trying to avoid it this time, the first is the web server.
+
+There are many great choices available on the internet, including Valet, MAMP, XAMPP... But I notice macOS Mojave comes with Apache and PHP 7.1 built in. Woohoo! A little config and installing MySQL are what I need to do to install my web server.
 
 ## Configure Apache
 Edit Apache config file as root
